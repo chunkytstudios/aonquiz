@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Member of Ashes Over Neon Are You?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff2d78;
+    --purple: #b84fff;
+    --yellow: #f5e642;
+    --cyan: #00f0ff;
+    --dark: #07070d;
+    --dark2: #0f0f1a;
+    --dark3: #181825;
+    --text: #e8e8f2;
+    --muted: #666680;
+    --border: #252535;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+
+  .header-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 8vw, 72px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .header-title .line1 { color: var(--pink); display: block; }
+  .header-title .line2 { color: var(--text); display: block; }
+  .header-title .line3 {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--purple);
+    display: block;
+  }
+
+  .header-sub {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeUp 0.6s 0.2s ease both;
+    line-height: 1.6;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .divider-icon {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--pink);
+    letter-spacing: 2px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    margin-bottom: 32px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: var(--dark3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 6px;
+    height: 9px;
+    background: white;
+    box-shadow: 0 0 10px white, 0 0 20px var(--pink);
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan));
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .q-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--pink);
+    margin-bottom: 12px;
+  }
+
+  .q-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 4vw, 30px);
+    letter-spacing: 1px;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+
+  .option {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--pink), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .option:hover::before { opacity: 0.06; }
+  .option:hover {
+    border-color: var(--pink);
+    transform: translateX(4px);
+  }
+
+  .option:hover .opt-letter { color: var(--pink); border-color: var(--pink); }
+
+  .option.selected {
+    border-color: var(--pink);
+    background: rgba(255,45,120,0.08);
+  }
+
+  .option.selected::before { opacity: 0.08; }
+  .option.selected .opt-letter { color: var(--pink); border-color: var(--pink); background: rgba(255,45,120,0.15); }
+
+  .opt-letter {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: all 0.2s;
+    position: relative;
+    z-index: 1;
+    margin-top: 1px;
+  }
+
+  .opt-text {
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* RESULT */
+  .result-card {
+    display: none;
+    animation: cardIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .result-card.show { display: block; }
+
+  .result-header {
+    text-align: center;
+    padding: 48px 36px 36px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .result-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .result-sera::before { background: linear-gradient(90deg, var(--pink), #ff6b9d); }
+  .result-dante::before { background: linear-gradient(90deg, var(--purple), #7b2fff); }
+  .result-nox::before { background: linear-gradient(90deg, var(--cyan), #0099cc); }
+  .result-malachi::before { background: linear-gradient(90deg, var(--yellow), #c4b800); }
+
+  .result-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .result-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 12vw, 96px);
+    letter-spacing: 4px;
+    line-height: 0.9;
+    margin-bottom: 8px;
+  }
+
+  .result-sera .result-name { color: var(--pink); text-shadow: 0 0 40px rgba(255,45,120,0.4); }
+  .result-dante .result-name { color: var(--purple); text-shadow: 0 0 40px rgba(184,79,255,0.4); }
+  .result-nox .result-name { color: var(--cyan); text-shadow: 0 0 40px rgba(0,240,255,0.4); }
+  .result-malachi .result-name { color: var(--yellow); text-shadow: 0 0 40px rgba(245,230,66,0.4); }
+
+  .result-role {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .result-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  .result-traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .trait-tag {
+    padding: 4px 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border: 1px solid;
+  }
+
+  .result-sera .trait-tag { border-color: var(--pink); color: var(--pink); background: rgba(255,45,120,0.08); }
+  .result-dante .trait-tag { border-color: var(--purple); color: var(--purple); background: rgba(184,79,255,0.08); }
+  .result-nox .trait-tag { border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.08); }
+  .result-malachi .trait-tag { border-color: var(--yellow); color: var(--yellow); background: rgba(245,230,66,0.08); }
+
+  .result-quote {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--muted);
+    border-left: 3px solid var(--border);
+    padding: 12px 20px;
+    text-align: left;
+    margin: 0 auto;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+
+  .result-sera .result-quote { border-color: var(--pink); }
+  .result-dante .result-quote { border-color: var(--purple); }
+  .result-nox .result-quote { border-color: var(--cyan); }
+  .result-malachi .result-quote { border-color: var(--yellow); }
+
+  /* CTA */
+  .result-cta {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    padding: 28px 36px;
+    text-align: center;
+  }
+
+  .cta-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--pink);
+    color: var(--dark);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    margin: 6px;
+  }
+
+  .cta-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,45,120,0.3);
+  }
+
+  .cta-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 14px 28px;
+  }
+
+  .cta-btn.secondary:hover {
+    border-color: var(--text);
+    color: var(--text);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* GLOW BG effects */
+  .glow-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob1 { width: 500px; height: 500px; background: var(--pink); top: -200px; right: -200px; }
+  .blob2 { width: 400px; height: 400px; background: var(--purple); bottom: -150px; left: -150px; }
+
+  /* Mobile */
+  @media (max-width: 500px) {
+    .question-card, .result-header, .result-cta { padding: 24px 20px; }
+    .q-text { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-blob blob1"></div>
+<div class="glow-blob blob2"></div>
+
+<div class="container">
+  <div class="header" id="quizHeader">
+    <div class="header-eyebrow">// TRANSMISSION INCOMING //</div>
+    <div class="header-title">
+      <span class="line1">WHICH MEMBER</span>
+      <span class="line2">OF ASHES</span>
+      <span class="line3">OVER NEON</span>
+    </div>
+    <div class="header-sub">The world is fake. The neon lies. But your signal? That's real. Find out which outcast you are.</div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">// AON //</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizSection">
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-top">
+        <span id="progressLabel">QUESTION 1 OF 8</span>
+        <span id="progressPct">12%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:12%"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNumber">// Q.01</div>
+      <div class="q-text" id="qText">Loading...</div>
+      <div class="options" id="optionsWrap"></div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header" id="resultHeader">
+      <div class="result-eyebrow">// YOUR SIGNAL IS //</div>
+      <div class="result-name" id="resultName"></div>
+      <div class="result-role" id="resultRole"></div>
+      <div class="result-desc" id="resultDesc"></div>
+      <div class="result-traits" id="resultTraits"></div>
+      <div class="result-quote" id="resultQuote"></div>
+    </div>
+    <div class="result-cta">
+      <div class="cta-text">// THE FULL STORY DROPS MAY 5 ON KICKSTARTER //</div>
+      <a href="https://kickstarter.com" class="cta-btn" target="_blank">BACK THE CAMPAIGN</a>
+      <button class="cta-btn secondary" onclick="restartQuiz()">RETAKE QUIZ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    text: "The city's surveillance grid just clocked you. What's your move?",
+    options: [
+      { text: "Step into the light. Let them see you. Make it a statement.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Disappear into the crowd — but leave them something to talk about.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "You already looped the feed three minutes ago. They saw nothing.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Stand still. Wait. You've already calculated the exit.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+    ]
+  },
+  {
+    text: "Your bandmate is about to do something reckless. You...",
+    options: [
+      { text: "Go first. Someone has to lead.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Hype them up. Chaos is just untapped energy.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Run the numbers quietly. Then tell them what they actually need to know.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Say nothing. Watch. Intervene at exactly the right moment.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+    ]
+  },
+  {
+    text: "What does the city sound like to you?",
+    options: [
+      { text: "A scream that nobody's screaming yet.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "A frequency waiting to be tuned.", chars: { sera: 0, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Static. Underneath it — the real signal.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "A clock. Always counting down to something.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
+    ]
+  },
+  {
+    text: "You find out the system has been lying to everyone for decades. Your first reaction is...",
+    options: [
+      { text: "Rage. Pure, immediate, righteous.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
+      { text: "A slow grin. This is exactly what you needed.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Quiet confirmation. You already suspected. Now you have proof.", chars: { sera: 0, dante: 0, nox: 3, malachi: 2 } },
+      { text: "You file it away. Emotion comes later. Clarity comes first.", chars: { sera: 0, dante: 1, nox: 1, malachi: 3 } }
+    ]
+  },
+  {
+    text: "What's your relationship with rules?",
+    options: [
+      { text: "Rules are someone else's cage.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Rules are suggestions for people with no imagination.", chars: { sera: 1, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Rules are systems. Systems have exploits.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "I follow the rules I make for myself. Those are unbreakable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+    ]
+  },
+  {
+    text: "The night before the biggest show of your life. Where are you?",
+    options: [
+      { text: "Pacing. Running through every scenario. Already furious at tomorrow.", chars: { sera: 3, dante: 0, nox: 1, malachi: 0 } },
+      { text: "Out in the city. Feeding off the energy.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "At the venue at 2AM, checking the acoustics and the rigging.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Asleep. If the preparation wasn't done already, it's too late.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } }
+    ]
+  },
+  {
+    text: "Someone in the crowd shouts that you don't belong on that stage. You...",
+    options: [
+      { text: "Lock eyes with them. Sing louder.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Laugh, point them out, make it part of the show.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "Don't react. Let the music do the talking.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
+      { text: "Finish the set. Then you never forget that face.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
+    ]
+  },
+  {
+    text: "What do you want people to feel when they hear your music?",
+    options: [
+      { text: "Like they finally have permission to be angry.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
+      { text: "Alive. Like anything is possible tonight.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Like they've heard something they can't explain but can't stop thinking about.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
+      { text: "Precision. Like every note was inevitable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+    ]
+  }
+];
+
+const characters = {
+  sera: {
+    name: "SERA",
+    role: "// VOCALIST · THE PASSIONATE HOTHEAD //",
+    cssClass: "result-sera",
+    traits: ["RAGE", "RAW", "FEARLESS", "FIRE"],
+    desc: "You are Sera — and you don't ask for the stage, you take it. Your emotions aren't a weakness, they're a weapon. You feel everything at full volume and you wouldn't have it any other way. The system doesn't scare you. It should be scared of you.",
+    quote: "\"I'm not angry because something went wrong. I'm angry because they thought we wouldn't notice.\""
+  },
+  dante: {
+    name: "DANTE",
+    role: "// VOCALIST · THE SPIRIT & CHARISMA //",
+    cssClass: "result-dante",
+    traits: ["MAGNETIC", "WILD", "VISIONARY", "ALIVE"],
+    desc: "You are Dante — the one who makes the whole room lean forward. You don't just command attention, you make people feel seen. Chaos doesn't overwhelm you; it's where you do your best work. You're the reason strangers become believers.",
+    quote: "\"The city wants you small. I want you enormous. Pick one.\""
+  },
+  nox: {
+    name: "NOX",
+    role: "// DRUMS · THE TECHY NEURODIVERGENT //",
+    cssClass: "result-nox",
+    traits: ["PRECISE", "PERCEPTIVE", "WIRED", "UNSEEN"],
+    desc: "You are Nox — the one who sees the pattern underneath the noise. While everyone else reacts, you've already mapped three moves ahead. You process the world differently, and that's not a flaw — that's the edge. Your mind runs faster than the city's surveillance grid.",
+    quote: "\"Everyone hears the beat. I hear what the beat is hiding.\""
+  },
+  malachi: {
+    name: "MALACHI",
+    role: "// GUITAR · THE STOIC PERFECTIONIST //",
+    cssClass: "result-malachi",
+    traits: ["IRON", "DELIBERATE", "EXACTING", "UNBREAKABLE"],
+    desc: "You are Malachi — and every move you make is intentional. You don't waste words, energy, or time. The standard you hold yourself to is brutal and unforgiving, and you expect nothing less from the world around you. When you finally act, it's already over.",
+    quote: "\"Perfection isn't the goal. It's the floor.\""
+  }
+};
+
+let current = 0;
+let scores = { sera: 0, dante: 0, nox: 0, malachi: 0 };
+const letters = ['A', 'B', 'C', 'D'];
+
+function renderQuestion() {
+  const q = questions[current];
+  const total = questions.length;
+  const pct = Math.round(((current + 1) / total) * 100);
+
+  document.getElementById('qNumber').textContent = `// Q.0${current + 1}`;
+  document.getElementById('qText').textContent = q.text;
+  document.getElementById('progressLabel').textContent = `QUESTION ${current + 1} OF ${total}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt.text}</span>`;
+    btn.onclick = () => selectAnswer(opt.chars, btn);
+    wrap.appendChild(btn);
+  });
+
+  // Re-animate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'cardIn 0.4s cubic-bezier(0.4,0,0.2,1) both';
+}
+
+function selectAnswer(charScores, btn) {
+  // Highlight selected
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  // Add scores
+  Object.keys(charScores).forEach(k => { scores[k] += charScores[k]; });
+
+  // Next question after brief pause
+  setTimeout(() => {
+    current++;
+    if (current < questions.length) {
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }, 280);
+}
+
+function showResult() {
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('quizHeader').style.display = 'none';
+
+  const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+  const char = characters[winner];
+
+  const resultCard = document.getElementById('resultCard');
+  const header = document.getElementById('resultHeader');
+
+  header.className = `result-header ${char.cssClass}`;
+  document.getElementById('resultName').textContent = char.name;
+  document.getElementById('resultRole').textContent = char.role;
+  document.getElementById('resultDesc').textContent = char.desc;
+  document.getElementById('resultQuote').textContent = char.quote;
+
+  const traitsWrap = document.getElementById('resultTraits');
+  traitsWrap.innerHTML = char.traits.map(t => `<span class="trait-tag">${t}</span>`).join('');
+
+  resultCard.classList.add('show');
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartQuiz() {
+  current = 0;
+  scores = { sera: 0, dante: 0, nox: 0, malachi: 0 };
+
+  document.getElementById('resultCard').classList.remove('show');
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('quizHeader').style.display = 'block';
+
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+renderQuestion();
+</script>
+</body>
+</html>
