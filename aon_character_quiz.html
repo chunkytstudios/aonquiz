@@ -520,7 +520,7 @@
       <span class="line2">OF ASHES</span>
       <span class="line3">OVER NEON</span>
     </div>
-    <div class="header-sub">The world is fake. The neon lies. But your signal? That's real. Find out which outcast you are.</div>
+    <div class="header-sub">The world is fake and neon lies, but your soul holds a broadcast that never dies. Which Punk do you broadcast with?</div>
     <div class="divider">
       <div class="divider-line"></div>
       <div class="divider-icon">// AON //</div>
@@ -563,7 +563,7 @@
       <div class="result-quote" id="resultQuote"></div>
     </div>
     <div class="result-cta">
-      <div class="cta-text">// THE FULL STORY DROPS MAY 5 ON KICKSTARTER //</div>
+      <div class="cta-text">// THE FULL STORY DROPS SEPTEMBER 9 ON KICKSTARTER //</div>
       <a href="https://kickstarter.com" class="cta-btn" target="_blank">BACK THE CAMPAIGN</a>
       <button class="cta-btn secondary" onclick="restartQuiz()">RETAKE QUIZ</button>
     </div>
@@ -575,10 +575,10 @@ const questions = [
   {
     text: "The city's surveillance grid just clocked you. What's your move?",
     options: [
-      { text: "Step into the light. Let them see you. Make it a statement.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "Disappear into the crowd — but leave them something to talk about.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
-      { text: "You already looped the feed three minutes ago. They saw nothing.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Stand still. Wait. You've already calculated the exit.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Step into the light and let them see. It's time to make a statement.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Disappear into the crowd... but leave them something to talk about.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "You already looped the grid's feed three minutes ago. They saw nothing.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Stand still. Wait. The exit is already calculated.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   },
   {
@@ -591,18 +591,18 @@ const questions = [
     ]
   },
   {
-    text: "What does the city sound like to you?",
+    text: "When you're lying awake at night, what does the city sound like to you?",
     options: [
       { text: "A scream that nobody's screaming yet.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "A frequency waiting to be tuned.", chars: { sera: 0, dante: 3, nox: 1, malachi: 0 } },
-      { text: "Static. Underneath it — the real signal.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "A clock. Always counting down to something.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
+      { text: "An undialed frequency waiting to be tuned.", chars: { sera: 0, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Static and white noise. But hiding something underneath.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "A clock. Counting down to something.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "You find out the system has been lying to everyone for decades. Your first reaction is...",
     options: [
-      { text: "Rage. Pure, immediate, righteous.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
+      { text: "Rage. Pure, immediate, righteous rage.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
       { text: "A slow grin. This is exactly what you needed.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
       { text: "Quiet confirmation. You already suspected. Now you have proof.", chars: { sera: 0, dante: 0, nox: 3, malachi: 2 } },
       { text: "You file it away. Emotion comes later. Clarity comes first.", chars: { sera: 0, dante: 1, nox: 1, malachi: 3 } }
@@ -611,8 +611,8 @@ const questions = [
   {
     text: "What's your relationship with rules?",
     options: [
-      { text: "Rules are someone else's cage.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "Rules are suggestions for people with no imagination.", chars: { sera: 1, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Rules are someone else's cage.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Rules are suggestions for people with no imagination.", chars: { sera: 3, dante: 1, nox: 1, malachi: 0 } },
       { text: "Rules are systems. Systems have exploits.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
       { text: "I follow the rules I make for myself. Those are unbreakable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
@@ -620,28 +620,28 @@ const questions = [
   {
     text: "The night before the biggest show of your life. Where are you?",
     options: [
-      { text: "Pacing. Running through every scenario. Already furious at tomorrow.", chars: { sera: 3, dante: 0, nox: 1, malachi: 0 } },
-      { text: "Out in the city. Feeding off the energy.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Running through every scenario. Pacing Already annoyed at tomorrow.", chars: { sera: 3, dante: 0, nox: 1, malachi: 0 } },
+      { text: "Out in the city. Feeding off the people's energy and handing flyers.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
       { text: "At the venue at 2AM, checking the acoustics and the rigging.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Asleep. If the preparation wasn't done already, it's too late.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } }
+      { text: "Verify the plan. If the preparation wasn't done already, it's too late.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "Someone in the crowd shouts that you don't belong on that stage. You...",
     options: [
-      { text: "Lock eyes with them. Sing louder.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "Laugh, point them out, make it part of the show.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
-      { text: "Don't react. Let the music do the talking.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
-      { text: "Finish the set. Then you never forget that face.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
+      { text: "Lock eyes. Play louder.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Make them a part of the show. They'll either regret it or enjoy it.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "Don't react. The skill does the talking, anyway.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
+      { text: "Finish the set. Move on. Soap isn't concerned with germs.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "What do you want people to feel when they hear your music?",
     options: [
       { text: "Like they finally have permission to be angry.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
-      { text: "Alive. Like anything is possible tonight.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
-      { text: "Like they've heard something they can't explain but can't stop thinking about.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
-      { text: "Precision. Like every note was inevitable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Alive. Like anything is possible in the moment.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Like they've heard an explanation to something they couldn't explain before.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
+      { text: "Precision. Whole.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   }
 ];
@@ -652,15 +652,15 @@ const characters = {
     role: "// VOCALIST · THE PASSIONATE HOTHEAD //",
     cssClass: "result-sera",
     traits: ["RAGE", "RAW", "FEARLESS", "FIRE"],
-    desc: "You are Sera — and you don't ask for the stage, you take it. Your emotions aren't a weakness, they're a weapon. You feel everything at full volume and you wouldn't have it any other way. The system doesn't scare you. It should be scared of you.",
-    quote: "\"I'm not angry because something went wrong. I'm angry because they thought we wouldn't notice.\""
+    desc: "You are Sera. You don't ask for the stage, you take it. Your emotions aren't a weakness, they're a weapon. You feel everything at full volume and you wouldn't have it any other way. The system doesn't scare you. It should be scared OF YOU.",
+    quote: "\"I'm angry because they thought we wouldn't notice.\""
   },
   dante: {
     name: "DANTE",
-    role: "// VOCALIST · THE SPIRIT & CHARISMA //",
+    role: "// THE DJ · THE MAN OF THE PEOPLE //",
     cssClass: "result-dante",
     traits: ["MAGNETIC", "WILD", "VISIONARY", "ALIVE"],
-    desc: "You are Dante — the one who makes the whole room lean forward. You don't just command attention, you make people feel seen. Chaos doesn't overwhelm you; it's where you do your best work. You're the reason strangers become believers.",
+    desc: "You are Dante. The one who makes the whole room lean forward. You command attention and make people feel seen. Chaos doesn't overwhelm you; it's where you do your best work. You're the reason strangers become believers. Believers become family.",
     quote: "\"The city wants you small. I want you enormous. Pick one.\""
   },
   nox: {
@@ -668,7 +668,7 @@ const characters = {
     role: "// DRUMS · THE TECHY NEURODIVERGENT //",
     cssClass: "result-nox",
     traits: ["PRECISE", "PERCEPTIVE", "WIRED", "UNSEEN"],
-    desc: "You are Nox — the one who sees the pattern underneath the noise. While everyone else reacts, you've already mapped three moves ahead. You process the world differently, and that's not a flaw — that's the edge. Your mind runs faster than the city's surveillance grid.",
+    desc: "You are Nox. You observe the world in patterns. While everyone else reacts, you've already mapped the moves ahead. You process the world differently and know how to turn it into a superpower. Your mind runs fast. That's not your problem if they can't keep up.",
     quote: "\"Everyone hears the beat. I hear what the beat is hiding.\""
   },
   malachi: {
@@ -676,7 +676,7 @@ const characters = {
     role: "// GUITAR · THE STOIC PERFECTIONIST //",
     cssClass: "result-malachi",
     traits: ["IRON", "DELIBERATE", "EXACTING", "UNBREAKABLE"],
-    desc: "You are Malachi — and every move you make is intentional. You don't waste words, energy, or time. The standard you hold yourself to is brutal and unforgiving, and you expect nothing less from the world around you. When you finally act, it's already over.",
+    desc: "You are Malachi. Every move you make is intentional. You don't waste words, energy, or time. The standard you hold yourself to is brutal and unforgiving, and you expect nothing less from the world around you. When you finally act, it's already over.",
     quote: "\"Perfection isn't the goal. It's the floor.\""
   }
 };
