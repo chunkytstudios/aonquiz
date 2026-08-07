@@ -753,6 +753,7 @@ function showResult() {
   pImg.onerror = () => pWrap.classList.add('hidden');
   pImg.alt = char.name;
   pImg.src = `portraits/${winner}.jpg`;
+  if (pImg.complete && pImg.naturalWidth > 0) pWrap.classList.remove('hidden');
 
   document.getElementById('resultName').textContent = char.name;
   document.getElementById('resultRole').textContent = char.role;
