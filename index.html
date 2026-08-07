@@ -319,6 +319,55 @@
     margin-bottom: 12px;
   }
 
+  /* PORTRAIT */
+  .result-portrait {
+    width: 200px;
+    height: 200px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 22px;
+    position: relative;
+    background: #07060f;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .result-portrait.hidden { display: none; }
+
+  .result-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: contrast(1.04) saturate(1.06);
+  }
+
+  /* scanline wash over the portrait */
+  .result-portrait::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,.22) 2px, rgba(0,0,0,.22) 3px
+    );
+    pointer-events: none;
+  }
+
+  /* corner brackets, tinted per character */
+  .pc { position: absolute; width: 16px; height: 16px; z-index: 2; }
+  .pc.tl { top: -1px; left: -1px;  border-top: 2px solid var(--pcol); border-left: 2px solid var(--pcol); }
+  .pc.tr { top: -1px; right: -1px; border-top: 2px solid var(--pcol); border-right: 2px solid var(--pcol); }
+  .pc.bl { bottom: -1px; left: -1px;  border-bottom: 2px solid var(--pcol); border-left: 2px solid var(--pcol); }
+  .pc.br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--pcol); border-right: 2px solid var(--pcol); }
+
+  .result-sera    .result-portrait { --pcol: var(--pink);   box-shadow: 0 0 40px rgba(255,45,120,.16); }
+  .result-dante   .result-portrait { --pcol: var(--purple); box-shadow: 0 0 40px rgba(184,79,255,.16); }
+  .result-nox     .result-portrait { --pcol: var(--cyan);   box-shadow: 0 0 40px rgba(0,240,255,.16); }
+  .result-malachi .result-portrait { --pcol: var(--yellow); box-shadow: 0 0 40px rgba(245,230,66,.16); }
+
+  @media (max-width: 480px) {
+    .result-portrait { width: 156px; height: 156px; }
+  }
+
   .result-name {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(56px, 12vw, 96px);
@@ -472,7 +521,7 @@
       <span class="line2">OF ASHES</span>
       <span class="line3">OVER NEON</span>
     </div>
-    <div class="header-sub">The world is fake because neon lies. But you're real. Your signal is real. Find out which outcast you are.</div>
+    <div class="header-sub">The world is fake. The neon lies. But your signal? That's real. Find out which Punk you are.</div>
     <div class="divider">
       <div class="divider-line"></div>
       <div class="divider-icon">// AON //</div>
@@ -503,6 +552,11 @@
   <div class="result-card" id="resultCard">
     <div class="result-header" id="resultHeader">
       <div class="result-eyebrow">// YOUR SIGNAL IS //</div>
+      <div class="result-portrait hidden" id="resultPortrait">
+        <div class="pc tl"></div><div class="pc tr"></div>
+        <div class="pc bl"></div><div class="pc br"></div>
+        <img id="resultPortraitImg" src="" alt="">
+      </div>
       <div class="result-name" id="resultName"></div>
       <div class="result-role" id="resultRole"></div>
       <div class="result-desc" id="resultDesc"></div>
@@ -510,8 +564,8 @@
       <div class="result-quote" id="resultQuote"></div>
     </div>
     <div class="result-cta">
-      <div class="cta-text">// THE FULL STORY DROPS MAY 5 ON KICKSTARTER //</div>
-      <a href="https://www.kickstarter.com/projects/ashesoverneon/ashes-over-neon-in-the-gutter-the-origin-story-book-0?ref=banner" class="cta-btn" target="_blank">BACK THE CAMPAIGN</a>
+      <div class="cta-text">// THE FULL STORY DROPS SEPTEMBER 9 ON KICKSTARTER //</div>
+      <a href="https://kickstarter.com" class="cta-btn" target="_blank">BACK THE CAMPAIGN</a>
       <button class="cta-btn secondary" onclick="restartQuiz()">RETAKE QUIZ</button>
     </div>
   </div>
@@ -522,36 +576,36 @@ const questions = [
   {
     text: "The city's surveillance grid just clocked you. What's your move?",
     options: [
-      { text: "Step into the light. Let them see you. Make it a statement.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
-      { text: "Disappear into the crowd, but leave them something to talk about.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } },
-      { text: "The feed is already on loop. They didn't see anything.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Keep my cool. I know where the exits are.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Step into the light. Let them see you. Make it a statement.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Disappear into the crowd — but leave them something to talk about.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "You already looped the feed three minutes ago. They saw nothing.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Stand still. Wait. You've already calculated the exit.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   },
   {
     text: "Your bandmate is about to do something reckless. You...",
     options: [
-      { text: "Go first. Someone has to lead.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
-      { text: "Hype them up. Chaos is just untapped energy.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Go first. Someone has to lead.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Hype them up. Chaos is just untapped energy.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
       { text: "Run the numbers quietly. Then tell them what they actually need to know.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Say nothing and watch. Intervene if needed.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Say nothing. Watch. Intervene at exactly the right moment.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   },
   {
     text: "What does the city sound like to you?",
     options: [
       { text: "A scream that nobody's screaming yet.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "A frequency waiting to be tuned.", chars: { sera: 0, dante: 1, nox: 3, malachi: 0 } },
-      { text: "Static. Underneath it? The real signal.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "A frequency waiting to be tuned.", chars: { sera: 0, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Static. Underneath it — the real signal.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
       { text: "A clock. Always counting down to something.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "You find out the system has been lying to everyone for decades. Your first reaction is...",
     options: [
-      { text: "Rage. Pure, immediate, rage.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
-      { text: "A slow grin. Finally, the people know.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
-      { text: "Vindication. You already suspected. Now you have the proof.", chars: { sera: 0, dante: 0, nox: 3, malachi: 2 } },
+      { text: "Rage. Pure, immediate, righteous.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
+      { text: "A slow grin. This is exactly what you needed.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Quiet confirmation. You already suspected. Now you have proof.", chars: { sera: 0, dante: 0, nox: 3, malachi: 2 } },
       { text: "You file it away. Emotion comes later. Clarity comes first.", chars: { sera: 0, dante: 1, nox: 1, malachi: 3 } }
     ]
   },
@@ -559,36 +613,36 @@ const questions = [
     text: "What's your relationship with rules?",
     options: [
       { text: "Rules are someone else's cage.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "Just a passive term for obedience.", chars: { sera: 1, dante: 3, nox: 1, malachi: 0 } },
-      { text: "Once you introduce rules it becomes a game. And there's always a way to win.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Rules are systems. Systems have exploits.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Rules are suggestions for people with no imagination.", chars: { sera: 1, dante: 3, nox: 1, malachi: 0 } },
+      { text: "Rules are systems. Systems have exploits.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "I follow the rules I make for myself. Those are unbreakable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   },
   {
     text: "The night before the biggest show of your life. Where are you?",
     options: [
-      { text: "Contacting everyone involved making sure no one fucks up.", chars: { sera: 3, dante: 0, nox: 1, malachi: 0 } },
-      { text: "Connecting with the people, passing out last minute flyers.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
-      { text: "Running through every scenario so nothing goes wrong.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
-      { text: "Already at the venue. Equipment and rigs need to be checked.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } }
+      { text: "Pacing. Running through every scenario. Already furious at tomorrow.", chars: { sera: 3, dante: 0, nox: 1, malachi: 0 } },
+      { text: "Out in the city. Feeding off the energy.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "At the venue at 2AM, checking the acoustics and the rigging.", chars: { sera: 0, dante: 0, nox: 3, malachi: 1 } },
+      { text: "Asleep. If the preparation wasn't done already, it's too late.", chars: { sera: 0, dante: 1, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "Someone in the crowd shouts that you don't belong on that stage. You...",
     options: [
-      { text: "Lock eyes with them and sing louder.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
-      { text: "Think on my feet and make them a part of the show.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
-      { text: "Internalize it so that never happens again.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
-      { text: "Don't react. Let the Music do the talking.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
+      { text: "Lock eyes with them. Sing louder.", chars: { sera: 3, dante: 1, nox: 0, malachi: 0 } },
+      { text: "Laugh, point them out, make it part of the show.", chars: { sera: 0, dante: 3, nox: 0, malachi: 1 } },
+      { text: "Don't react. Let the music do the talking.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
+      { text: "Finish the set. Then you never forget that face.", chars: { sera: 1, dante: 0, nox: 0, malachi: 3 } }
     ]
   },
   {
     text: "What do you want people to feel when they hear your music?",
     options: [
-      { text: "Like they finally have permission to be heard.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
-      { text: "Alive, in the moment.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
+      { text: "Like they finally have permission to be angry.", chars: { sera: 3, dante: 0, nox: 0, malachi: 1 } },
+      { text: "Alive. Like anything is possible tonight.", chars: { sera: 1, dante: 3, nox: 0, malachi: 0 } },
       { text: "Like they've heard something they can't explain but can't stop thinking about.", chars: { sera: 0, dante: 1, nox: 3, malachi: 1 } },
-      { text: "That we feel exactly like you do.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
+      { text: "Precision. Like every note was inevitable.", chars: { sera: 0, dante: 0, nox: 1, malachi: 3 } }
     ]
   }
 ];
@@ -596,34 +650,34 @@ const questions = [
 const characters = {
   sera: {
     name: "SERA",
-    role: "// VOCALIST AND BASS · THE PASSIONATE HOTHEAD //",
+    role: "// VOCALIST · THE PASSIONATE HOTHEAD //",
     cssClass: "result-sera",
     traits: ["RAGE", "RAW", "FEARLESS", "FIRE"],
-    desc: "You are Sera. You don't ask for the stage, you take it. Your emotions aren't a weakness, they're a weapon. You feel everything at full volume and you wouldn't have it any other way. The system doesn't scare you. It should be scared OF you.",
+    desc: "You are Sera — and you don't ask for the stage, you take it. Your emotions aren't a weakness, they're a weapon. You feel everything at full volume and you wouldn't have it any other way. The system doesn't scare you. It should be scared of you.",
     quote: "\"I'm not angry because something went wrong. I'm angry because they thought we wouldn't notice.\""
   },
   dante: {
     name: "DANTE",
-    role: "// VOCALIST AND DJ · THE SPIRIT & CHARISMA //",
+    role: "// VOCALIST · THE SPIRIT & CHARISMA //",
     cssClass: "result-dante",
     traits: ["MAGNETIC", "WILD", "VISIONARY", "ALIVE"],
-    desc: "You are Dante. The one who makes the whole room lean forward. Not only do you command attention, you make people feel seen. Chaos doesn't overwhelm you, that's your comfort zone. You're the reason strangers become believers. And belief is a superpower.",
-    quote: "\"The city wants you small. I don't. Pick one.\""
+    desc: "You are Dante — the one who makes the whole room lean forward. You don't just command attention, you make people feel seen. Chaos doesn't overwhelm you; it's where you do your best work. You're the reason strangers become believers.",
+    quote: "\"The city wants you small. I want you enormous. Pick one.\""
   },
   nox: {
     name: "NOX",
-    role: "// DRUMMER · THE TECHY NEURODIVERGENT //",
+    role: "// DRUMS · THE TECHY NEURODIVERGENT //",
     cssClass: "result-nox",
     traits: ["PRECISE", "PERCEPTIVE", "WIRED", "UNSEEN"],
-    desc: "You are Nox. The one who sees the pattern underneath all the noise. While everyone else reacts, you're already three moves ahead. You process the world differently, and that's not a flaw. That's the edge. Your mind runs faster than the city's grid.",
-    quote: "\"Everyone just hears a beat. But I can feel what's underneath. I feel the rhythm.\""
+    desc: "You are Nox — the one who sees the pattern underneath the noise. While everyone else reacts, you've already mapped three moves ahead. You process the world differently, and that's not a flaw — that's the edge. Your mind runs faster than the city's surveillance grid.",
+    quote: "\"Everyone hears the beat. I hear what the beat is hiding.\""
   },
   malachi: {
     name: "MALACHI",
-    role: "// GUITARIST · THE STOIC PERFECTIONIST //",
+    role: "// GUITAR · THE STOIC PERFECTIONIST //",
     cssClass: "result-malachi",
     traits: ["IRON", "DELIBERATE", "EXACTING", "UNBREAKABLE"],
-    desc: "You are Malachi. Every move you make is intentional. You don't waste words, energy, or time. The standard you hold yourself to is brutal and unforgiving, and you expect nothing less from the world around you. When you finally act, it's already over.",
+    desc: "You are Malachi — and every move you make is intentional. You don't waste words, energy, or time. The standard you hold yourself to is brutal and unforgiving, and you expect nothing less from the world around you. When you finally act, it's already over.",
     quote: "\"Perfection isn't the goal. It's the floor.\""
   }
 };
@@ -691,6 +745,17 @@ function showResult() {
   const header = document.getElementById('resultHeader');
 
   header.className = `result-header ${char.cssClass}`;
+
+  // Portrait — hides itself if the file isn't there yet
+  const pWrap = document.getElementById('resultPortrait');
+  const pImg  = document.getElementById('resultPortraitImg');
+  pWrap.classList.add('hidden');
+  pImg.onload  = () => pWrap.classList.remove('hidden');
+  pImg.onerror = () => pWrap.classList.add('hidden');
+  pImg.alt = char.name;
+  pImg.src = `portraits/${winner}.jpg`;
+  if (pImg.complete && pImg.naturalWidth > 0) pWrap.classList.remove('hidden');
+
   document.getElementById('resultName').textContent = char.name;
   document.getElementById('resultRole').textContent = char.role;
   document.getElementById('resultDesc').textContent = char.desc;
